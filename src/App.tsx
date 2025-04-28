@@ -21,7 +21,7 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      <div className='switchLang'>
+      <div className='switch-lang'>
         <button style={getLocale()==='zh-CN'?{color: 'blue'}:{}} onClick={() => setLocale('zh-CN')}>
           中文
         </button>

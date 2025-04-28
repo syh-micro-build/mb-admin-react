@@ -40,3 +40,10 @@
 .read-the-docs {
   color: #888;
 }
+
+.switch-lang {
+  background-color: aqua;
+  button {
+    background-color: rgb(193, 56, 156);
+  }
+}
