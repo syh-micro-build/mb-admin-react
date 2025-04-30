@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import { NavLink } from "react-router";
+import reactLogo from '../../assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
+import './index.css'
 import { Button, DatePicker } from 'antd';
 import { useIntl } from 'react-intl';
-import { setLocale, getLocale } from './locales';
+import { setLocale, getLocale } from '../../locales';
 
-function App() {
+function Home() {
   const intl = useIntl();
   const [count, setCount] = useState(0)
 
@@ -35,9 +36,13 @@ function App() {
         </button>
         <Button type="primary">{ intl.formatMessage({id:'pages.button'}) }</Button>
         <DatePicker />
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+        <nav>
+          <NavLink to="/" >
+            Home
+          </NavLink>
+          <span> | </span>
+          <NavLink to="/about" style={{ color: '#333' }}>About</NavLink>
+        </nav>
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
@@ -46,4 +51,4 @@ function App() {
   )
 }
 
-export default App
+export default Home
