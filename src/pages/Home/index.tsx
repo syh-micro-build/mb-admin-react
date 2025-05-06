@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NavLink } from "react-router";
 import reactLogo from '../../assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -10,6 +10,16 @@ import { setLocale, getLocale } from '../../locales';
 function Home() {
   const intl = useIntl();
   const [count, setCount] = useState(0)
+  const [resText, setResText] = useState('')
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch('/mock/test')
+      const data = await res.json()
+      setResText(data.data.text)
+    }
+    fetchData()
+  }, [])
 
   return (
     <>
@@ -44,6 +54,7 @@ function Home() {
           <NavLink to="/about" style={{ color: '#333' }}>About</NavLink>
         </nav>
       </div>
+      <p>Request content(mock):{resText}</p>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
