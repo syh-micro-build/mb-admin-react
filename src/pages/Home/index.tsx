@@ -6,11 +6,13 @@ import './index.css'
 import { Button, DatePicker } from 'antd';
 import { useIntl } from 'react-intl';
 import { setLocale, getLocale } from '../../locales';
+import { getTestApi } from './api';
 
 function Home() {
   const intl = useIntl();
   const [count, setCount] = useState(0)
   const [resText, setResText] = useState('')
+  const [resAxiosText, setResAxiosText] = useState('')
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,6 +21,13 @@ function Home() {
       setResText(data.data.text)
     }
     fetchData()
+
+    const axiosData = async () => {
+      const res = await getTestApi()
+      const data = res.data
+      setResAxiosText(data.title)
+    }
+    axiosData()
   }, [])
 
   return (
@@ -55,6 +64,7 @@ function Home() {
         </nav>
       </div>
       <p>Request content(mock):{resText}</p>
+      <p>Request content(axios):{resAxiosText}</p>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
