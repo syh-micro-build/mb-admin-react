@@ -1,0 +1,22 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; /* 系统字体，确保跨平台一致性 */
+  font-synthesis: none; /* 禁用字体合成，确保使用系统字体 */
+  text-rendering: optimizeLegibility; /* 优化文字渲染，提升可读性 */
+  -webkit-font-smoothing: antialiased; /* 针对 webkit（Chrome/Safari）和 moz（Firefox）内核，启用字体抗锯齿，使文字边缘更平滑 */
+  -moz-osx-font-smoothing: grayscale; /* 针对 moz（Firefox）内核，启用字体抗锯齿，使文字边缘更平滑 */
+  color-scheme: light dark; /* 声明网页支持浅色/深色模式，浏览器可据此自动切换系统主题 */
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box; /* 使用 border-box 模型，确保 padding 和 border 不影响元素的宽高 */
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}

@@ -1,0 +1,8 @@
+:root {
+/* Theme Element Description */
+--border-radius: 4px;
+
+/* Theme Color */
+--color-primary-active: #1677ff;
+--color-bg-text-hover: rgba(0, 0, 0, 0.1);
+}

@@ -8,7 +8,7 @@ import {
 } from "react-router";
 import { router } from './router'
 import IntlProviderWrapper from './locales/InitlProviderWrapper.tsx';
-import './index.css'
+import './styles/index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

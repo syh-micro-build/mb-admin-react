@@ -17,7 +17,7 @@ createRoot(document.getElementById('root')!).render(
 )
 ```
 
-- 切换方法
+- 切换方法示意
 
 ```tsx
 import { Button, DatePicker } from 'antd';
@@ -47,6 +47,21 @@ function App() {
 
 export default App
 
+```
+
+- 切换组件示例
+
+```tsx
+import SelectLang from '../../locales/SelectLang';
+
+const PageComponent = () => {
+  return (
+    <div className='page-component'>
+      <SelectLang className='lang' />
+      ...page content
+    </div>
+  )
+}
 ```
 
 详细文档没时间写，后边补上，想干的太多了，忙不过来了啊～～～

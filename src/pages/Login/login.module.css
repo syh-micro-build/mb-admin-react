@@ -1,0 +1,28 @@
+.page-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: auto;
+  background-image: url('../../assets/login-bg.png');
+  background-size: 100% 100%;
+  > div {
+    background: none;
+  }
+}
+.other-login-icon {
+  margin-inline-start: 16px; 
+  font-size: 24px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+.lang {
+  width: 42px;
+  height: 42px;
+  line-height: 42px;
+  position: fixed;
+  right: 16px;
+  border-radius: var(--border-radius);
+  &:hover {
+    background-color: var(--color-bg-text-hover);
+  }
+}
