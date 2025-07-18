@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react'
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import './index.css'
 import { Button, DatePicker } from 'antd';
 import { useIntl } from 'react-intl';
 import { setLocale, getLocale } from '../../locales';
 import { getTestApi } from './api';
+import { useAppDispatch } from '../../stores';
+import { authReset } from '../../stores/authSlice';
 
 function Home() {
   const intl = useIntl();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [count, setCount] = useState(0)
   const [resText, setResText] = useState('')
   const [resAxiosText, setResAxiosText] = useState('')
@@ -28,6 +32,11 @@ function Home() {
     axiosData()
   }, [])
 
+  function loginOut() {
+    dispatch(authReset())
+    navigate('/login');
+  }
+
   return (
     <>
       <div>
@@ -40,10 +49,10 @@ function Home() {
       </div>
       <h1>Vite + React</h1>
       <div className='switch-lang'>
-        <button style={getLocale()==='zh-CN'?{color: 'blue'}:{}} onClick={() => setLocale('zh-CN')}>
+        <button style={getLocale() === 'zh-CN' ? { color: 'blue' } : {}} onClick={() => setLocale('zh-CN')}>
           中文
         </button>
-        <button style={getLocale()==='en-US'?{color: 'blue'}:{}} onClick={() => setLocale('en-US')}>
+        <button style={getLocale() === 'en-US' ? { color: 'blue' } : {}} onClick={() => setLocale('en-US')}>
           English
         </button>
       </div>
@@ -51,7 +60,7 @@ function Home() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <Button type="primary">{ intl.formatMessage({id:'pages.button'}) }</Button>
+        <Button type="primary">{intl.formatMessage({ id: 'pages.button' })}</Button>
         <DatePicker />
         <nav>
           <NavLink to="/" >
@@ -66,6 +75,7 @@ function Home() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+      <button onClick={loginOut}>退出登录</button>
     </>
   )
 }

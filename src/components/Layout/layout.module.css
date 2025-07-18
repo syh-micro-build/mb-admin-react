@@ -1,0 +1,12 @@
+.login-layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+  background-image: url('../../assets/login-bg.png');
+  background-size: 100% 100%;
+
+  >div {
+    background: none;
+  }
+}

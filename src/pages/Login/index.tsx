@@ -12,16 +12,20 @@ import {
   ProFormCheckbox,
   ProFormText,
   setAlpha,
+  type ProFormInstance,
 } from '@ant-design/pro-components';
 import { Space, Tabs, Alert, message, theme } from 'antd';
 import SelectLang from '../../locales/SelectLang';
-import Footer from '../../components/Footer';
 import type { CSSProperties } from 'react';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import { LoginLayout } from '../../components/Layout';
 import moduleStyles from './login.module.css';
 import MicroBuildLogo from '/logo.png';
 import { useIntl } from 'react-intl';
 import { loginApi } from './api';
+import { useAppDispatch, useAppSelector } from "../../stores"
+import { setAutoLogin, setLoginInfo, setUserInfo } from "../../stores/authSlice";
+import { useNavigate } from 'react-router';
 
 type LoginType = 'phone' | 'account';
 export type LoginFormType = {
@@ -30,7 +34,6 @@ export type LoginFormType = {
 }
 
 const {
-  pageContainer,
   otherLoginIcon,
   lang
 } = moduleStyles;
@@ -51,9 +54,14 @@ const LoginMessage: React.FC<{
 };
 
 const Login = () => {
+  const formRef = useRef<ProFormInstance>(null);
+  const dispatch = useAppDispatch();
   const { formatMessage } = useIntl();
+  const navigate = useNavigate();
 
   const { token } = theme.useToken();
+  let autoLoginStatus = useAppSelector((state) => state.auth.autoLogin);
+  const [loginState, setLoginState] = useState(true);
   const [loginType, setLoginType] = useState<LoginType>('account');
 
   const iconStyles: CSSProperties = {
@@ -62,14 +70,27 @@ const Login = () => {
 
   const loginFun = async (values: LoginFormType) => {
     const res = await loginApi(values);
-    console.log(res);
-
+    if (res.code !== 200 || res.data.code !== 200) {
+      setLoginState(false);
+      return;
+    } else {
+      autoLoginStatus = formRef.current?.getFieldValue('autoLogin');
+      dispatch(setAutoLogin(autoLoginStatus));
+      // 如果自动登录状态为true，则保存用户名和密码，否则清除
+      dispatch(setLoginInfo(autoLoginStatus ? {
+        username: values.username,
+        password: values.password,
+      } : undefined));
+      dispatch(setUserInfo(res.data.data));
+      navigate('/', { replace: true });
+    }
   };
 
   return (
-    <div className={pageContainer}>
+    <LoginLayout>
       <SelectLang className={lang} />
       <LoginForm
+        formRef={formRef}
         logo={MicroBuildLogo}
         title="Micro Build"
         subTitle={formatMessage({ id: 'login.subTitle' })}
@@ -98,7 +119,7 @@ const Login = () => {
           ]}
           onChange={(activeKey) => setLoginType(activeKey as LoginType)}
         />
-        {loginType === 'account' && (
+        {!loginState && loginType === 'account' && (
           <LoginMessage
             content={formatMessage({ id: 'login.accountLogin.errorMessage' })}
           />
@@ -189,7 +210,9 @@ const Login = () => {
             marginBlockEnd: 24,
           }}
         >
-          <ProFormCheckbox noStyle name="autoLogin">
+          <ProFormCheckbox fieldProps={{
+            defaultChecked: autoLoginStatus,
+          }} noStyle name="autoLogin">
             {formatMessage({ id: 'login.rememberMe' })}
           </ProFormCheckbox>
           <a
@@ -201,8 +224,7 @@ const Login = () => {
           </a>
         </div>
       </LoginForm>
-      <Footer />
-    </div>
+    </LoginLayout>
   );
 };
 
