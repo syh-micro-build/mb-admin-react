@@ -1,4 +1,5 @@
 import LoginLayout from "./component/LoginLayout";
-import MainLayout from "./component/MainLayout";
+import BlankLayout from "./component/BlankLayout";
+import MenuLayout from "./component/MenuLayout";
 
-export { LoginLayout, MainLayout };
+export { LoginLayout, BlankLayout, MenuLayout };

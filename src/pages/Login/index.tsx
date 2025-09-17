@@ -22,9 +22,9 @@ import { LoginLayout } from '../../components/Layout';
 import moduleStyles from './login.module.css';
 import MicroBuildLogo from '/logo.png';
 import { useIntl } from 'react-intl';
-import { loginApi } from './api';
+import { loginApi, getAdminRoleApi } from './api';
 import { useAppDispatch, useAppSelector } from "../../stores"
-import { setAutoLogin, setLoginInfo, setUserInfo } from "../../stores/authSlice";
+import { setAutoLogin, setLoginInfo, setUserInfo, setRoleInfo } from "../../stores/authSlice";
 import { useNavigate } from 'react-router';
 
 type LoginType = 'phone' | 'account';
@@ -61,6 +61,7 @@ const Login = () => {
 
   const { token } = theme.useToken();
   let autoLoginStatus = useAppSelector((state) => state.auth.autoLogin);
+  const loginInfo = useAppSelector((state) => state.auth.loginInfo);
   const [loginState, setLoginState] = useState(true);
   const [loginType, setLoginType] = useState<LoginType>('account');
 
@@ -82,9 +83,15 @@ const Login = () => {
         password: values.password,
       } : undefined));
       dispatch(setUserInfo(res.data.data));
+      await getRole(res.data.data.role);
       navigate('/', { replace: true });
     }
   };
+
+  const getRole = async (roleName: string) => {
+    const res = await getAdminRoleApi({ roleName });
+    dispatch(setRoleInfo(res.data.data));
+  }
 
   return (
     <LoginLayout>
@@ -95,6 +102,11 @@ const Login = () => {
         title="Micro Build"
         subTitle={formatMessage({ id: 'login.subTitle' })}
         onFinish={loginFun}
+        initialValues={{
+          autoLogin: autoLoginStatus,
+          username: loginInfo?.username,
+          password: loginInfo?.password,
+        }}
         actions={
           <Space>
             {formatMessage({ id: 'login.loginWith' })}
@@ -210,9 +222,7 @@ const Login = () => {
             marginBlockEnd: 24,
           }}
         >
-          <ProFormCheckbox fieldProps={{
-            defaultChecked: autoLoginStatus,
-          }} noStyle name="autoLogin">
+          <ProFormCheckbox noStyle name="autoLogin">
             {formatMessage({ id: 'login.rememberMe' })}
           </ProFormCheckbox>
           <a

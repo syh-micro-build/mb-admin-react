@@ -12,6 +12,7 @@ export interface AuthStorageState {
   loginInfo: { username?: string; password?: string } | null; // 登录信息
   autoLogin: boolean; // 是否启用自动登录
   userInfo: User | null;
+  roleInfo: RoleInfoItem[]; // 角色信息
 }
 
 // 认证状态类型
@@ -19,4 +20,14 @@ export interface AuthState extends AuthStorageState {
   loading: boolean; // 是否正在加载
   error: {message: string} | null; // 错误信息
 }
+
+export type RoleInfoItem =  {
+  path: string;
+  component: string;
+  redirect?: string;
+  name: string;
+  title: string;
+  icon: string;
+  children?: RoleInfoItem[];
+};
     

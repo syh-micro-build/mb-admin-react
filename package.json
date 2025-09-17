@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/pro-components": "^2.8.7",
     "@ant-design/v5-patch-for-react-19": "^1.0.3",
+    "@emotion/css": "^11.13.5",
     "@reduxjs/toolkit": "^2.7.0",
     "antd": "^5.24.8",
     "axios": "^1.9.0",

@@ -16,7 +16,7 @@ import { AuthState, User } from '../../types/auth';
 export const authPersistConfig = {
   key: "auth",
   storage,
-  whitelist: ['token', 'userInfo', 'autoLogin', 'loginInfo'], // 持久化的状态
+  whitelist: ['token', 'userInfo', 'autoLogin', 'loginInfo', 'roleInfo'], // 持久化的状态
   // transforms: [encryptor], // 添加加密转换器
 }
 
@@ -25,7 +25,11 @@ const initialState: AuthState = {
   token: null,
   userInfo: null,
   autoLogin: false,
-  loginInfo: null,
+  loginInfo: {
+    username: '',
+    password: ''
+  },
+  roleInfo: [],
   loading: false,
   error: null
 };
@@ -49,7 +53,10 @@ export const authSlice = createAppSlice({
     },
     // 设置登录信息
     setLoginInfo: (state, action: PayloadAction<{ username?: string; password?: string } | undefined>) => {
-      state.loginInfo = action.payload || null;
+      state.loginInfo = action.payload || {
+        username: '',
+        password: ''
+      };
     },
     // 设置自动登录状态
     setAutoLogin: (state, action: PayloadAction<boolean>) => {
@@ -59,17 +66,28 @@ export const authSlice = createAppSlice({
       } else {
         // 否则清除
         state.autoLogin = false;
-        state.loginInfo = null;
+        state.loginInfo = {
+          username: '',
+          password: ''
+        };
       }
     },
     // 退出登录
     authReset: (state) => {
       state.token = null;
       state.userInfo = null;
-      state.loginInfo = null;
+      !state.autoLogin && (state.loginInfo = {
+        username: '',
+        password: ''
+      });
+      state.roleInfo = [];
       state.loading = false;
       state.error = null;
-    }
+    },
+    // 设置角色信息
+    setRoleInfo: (state, action: PayloadAction<any[]>) => {
+      state.roleInfo = action.payload;
+    },
   },
   selectors: {
     // 获取当前用户信息
@@ -77,7 +95,6 @@ export const authSlice = createAppSlice({
   }
 });
 
-export const { clearError, setAutoLogin, setLoginInfo, setUserInfo, authReset } = authSlice.actions;
+export const { clearError, setAutoLogin, setLoginInfo, setUserInfo, authReset, setRoleInfo} = authSlice.actions;
 
 export const { selectorUser } = authSlice.selectors;
-    

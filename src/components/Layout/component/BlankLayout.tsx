@@ -1,14 +1,19 @@
+// 空白布局
 import { Outlet } from "react-router";
 import Footer from "../../Footer";
-import moduleStyles from "../layout.module.css";
-import { useRouterGuard } from "../../../router";
+import { css } from '@emotion/css';
+import useRouterGuard from "../../../router/useRouterGuard";
 
-const { loginLayoutContainer } = moduleStyles;
 function MainLayout() {
   const userInfo = useRouterGuard();
 
   return (
-    <div className={loginLayoutContainer}>
+    <div className={css`
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow: auto;
+      `}>
       {userInfo && (
         <>
           <div style={{ height: "100%" }}>
