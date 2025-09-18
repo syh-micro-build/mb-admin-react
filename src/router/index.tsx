@@ -43,6 +43,7 @@ const AppRouter = () => {
       }
       return item;
     }) : constantRoutes;
+    // TODO: 浏览器触发返回时，路由会重新计算，导致路由组件重新加载，并陷入死循环
     console.log('动态路由', routes);
 
 

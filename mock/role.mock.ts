@@ -10,8 +10,8 @@ const adminList = [
     component: '#',
     redirect: '/dashboard/analysis',
     name: 'Dashboard',
-    title: '首页',
-    icon: 'SmileFilled',
+    title: '仪表盘',
+    icon: 'DashboardOutlined',
     children: [
       {
         path: 'analysis',
@@ -27,7 +27,7 @@ const adminList = [
     redirect: '/authorization/user',
     name: 'Authorization',
     title: '权限管理',
-    icon: 'SmileFilled',
+    icon: 'LockOutlined',
     children: [
       {
         path: 'user',
@@ -52,8 +52,8 @@ const menus = [
       redirect: '/dashboard/analysis',
       name: 'Dashboard',
       id: 1,
-      title: '首页',
-      icon: 'SmileFilled',
+      title: '仪表盘',
+      icon: 'DashboardOutlined',
       children: [
         {
           path: 'analysis',
@@ -65,26 +65,6 @@ const menus = [
       ]
     }
   ],
-  [
-    {
-      path: '/dashboard',
-      component: '#',
-      redirect: '/dashboard/analysis',
-      name: 'Dashboard',
-      id: 1,
-      title: '首页',
-      icon: 'SmileFilled',
-      children: [
-        {
-          path: 'analysis',
-          component: 'pages/Home',
-          name: 'Analysis',
-          id: 2,
-          title: '分析页',
-        }
-      ]
-    }
-  ]
 ]
 
 for (let i = 0; i < 4; i++) {

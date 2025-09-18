@@ -1,7 +1,7 @@
 
 // 含有菜单布局
-import React, { lazy, use, useMemo, useState } from 'react';
-import { Outlet, redirect, useNavigate, useRoutes } from "react-router";
+import React, { useMemo, useState } from 'react';
+import { Outlet, useNavigate } from "react-router";
 import {
   CaretDownFilled,
   DoubleRightOutlined,
@@ -11,10 +11,7 @@ import {
   PlusCircleFilled,
   QuestionCircleFilled,
   SearchOutlined,
-  ChromeFilled,
-  CrownFilled,
-  SmileFilled,
-  TabletFilled,
+  SmileOutlined,
 } from '@ant-design/icons';
 import {
   type ProSettings,
@@ -39,6 +36,7 @@ import {
 import MicroBuildLogo from '/logo.png';
 import AvatarSrc from '../../../assets/avatar.jpg';
 import { RoleInfoItem } from '../../../../types/auth';
+import DynamicIcon from '../../Icon';
 import { type Route } from '@ant-design/pro-layout/es/typing';
 const Item: React.FC<{ children: React.ReactNode }> = (props) => {
   const { token } = theme.useToken();
@@ -276,7 +274,7 @@ function getRoleMenu(roleInfo: RoleInfoItem[]) {
     const filteredItem: Record<string, any> = {
       path: item.path,
       name: item.name,
-      component: item.component,
+      ...(item.icon && { icon: <DynamicIcon name={item.icon} /> }),
       ...(item.redirect && { redirect: item.redirect }),
     };
 
@@ -316,7 +314,7 @@ function MenuLayout() {
       {
         path: '/welcome',
         name: 'welcome',
-        icon: <SmileFilled />,
+        icon: <SmileOutlined />,
       }
     ];
 
